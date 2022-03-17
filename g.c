@@ -11,7 +11,7 @@ int main()
     int w = 0, h = 0;
 
     char vert[] = "ABCDEFGHIJKLMNOPQRST";
-    int f;
+
 
     FILE * matrixFile;
     FILE * graphFile;
@@ -33,18 +33,14 @@ int main()
     fputs("graph  {", graphFile);
 
     for (int i = 0; i < h; i++) {
-        f = 1;
         for (int j = 0; j < w; j++) {
             if(matrix[i][j] == 1){
-                if(f){
+                if(i > j){
                     fputc(vert[i], graphFile);
                     fputs("--", graphFile);
                     fprintf(graphFile, "%c;", vert[j]);
                     fputs("\n", graphFile);
 
-                    //f = 0;
-                }else{
-                    fprintf(graphFile, "%c;", vert[j]);
                 }
 
             }
