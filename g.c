@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define HEIGHT 100
 #define WIDTH 100
@@ -10,13 +11,15 @@ int main()
 
     int w = 0, h = 0;
 
-    char vert[] = "ABCDEFGHIJKLMNOPQRST";
+    //char vert[] = "ABCDEFGHIJKLMNOPQRST";
 
 
     FILE * matrixFile;
     FILE * graphFile;
 
     matrixFile = fopen("graph.txt", "r");
+        if (!matrixFile)
+        exit(EXIT_FAILURE);
 
     while(fgets(line, len, matrixFile)){
         w = 0;
@@ -34,11 +37,11 @@ int main()
 
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
-            if(matrix[i][j] == 1){
+            if(matrix[i][j] >= 1){
                 if(i > j){
-                    fputc(vert[i], graphFile);
+                    fprintf(graphFile, "%d", i);
                     fputs("--", graphFile);
-                    fprintf(graphFile, "%c;", vert[j]);
+                    fprintf(graphFile, "%d;", j);
                     fputs("\n", graphFile);
 
                 }
@@ -50,5 +53,6 @@ int main()
     fputs("}", graphFile);
     fclose(graphFile);
     fclose(matrixFile);
-    return 0;
+    system("dot -Tpng graf.gv -o file.png");
+    return (EXIT_SUCCESS);
 }
